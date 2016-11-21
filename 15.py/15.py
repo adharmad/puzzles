@@ -22,13 +22,48 @@ Heuristics:
 Display Option:
   -v		Displays the sequence of the whole state 
  		from the problem state to the goal state 
+
+The inputs are a series of 15 numbers accepted on the command line. The 
+blank is represented by _
 """
 
 # Imports
 import sys, string
 
+def readOptions(argv):
+    opts = {}
+
+    for arg in argv:
+        if arg.startswith('-'):
+            print (arg)
+            if arg == '-astar' or arg == '-id':
+                opts['algorithm'] = arg
+            elif arg == '-mt' or arg == '-mh':
+                opts['heuristics'] = arg
+            elif arg == '-v':
+                opts['verbose'] = True
+
+    return opts
+
+def readPuzzle(argv):
+    elems = []
+
+    for arg in argv:
+        if not arg.startswith('-'):
+            if arg.isdigit() or arg == '_':
+                elems.append(arg)
+
+    return elems
+
 def main(argv):
-    print("Entry point")
+    argv = argv[1:]
+
+    # parse commandline options
+    opts = readOptions(argv)
+
+    # read the puzzle
+    elems = readPuzzle(argv)
+
 
 if __name__ == '__main__':
     main(sys.argv)
