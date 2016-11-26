@@ -30,12 +30,19 @@ blank is represented by _
 # Imports
 import sys, string
 
+class Solver:
+    def __init__(self, grid, opts):
+        self.grid = grid
+        self.opts = opts
+
+    def solve(self):
+        pass
+
 def readOptions(argv):
     opts = {}
 
     for arg in argv:
         if arg.startswith('-'):
-            print (arg)
             if arg == '-astar' or arg == '-id':
                 opts['algorithm'] = arg
             elif arg == '-mt' or arg == '-mh':
@@ -55,6 +62,14 @@ def readPuzzle(argv):
 
     return elems
 
+def getGrid(elems):
+    grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+
+    for i in range(len(elems)):
+        grid[i // 4][i % 4] = elems[i]
+
+    return grid
+
 def main(argv):
     argv = argv[1:]
 
@@ -64,6 +79,11 @@ def main(argv):
     # read the puzzle
     elems = readPuzzle(argv)
 
+    # convert the elements to a grid
+    grid = getGrid(elems)
+
+    s = Solver(grid, opts)
+    s.solve()
 
 if __name__ == '__main__':
     main(sys.argv)
